@@ -14,13 +14,13 @@ interface Product {
 }
 
 const firebaseApp = initializeApp({
-  apiKey: "AIzaSyA6uiRjaGRocecCpf-NMov7vwa8mwTMs6I",
-  authDomain: "catalogo-cf-3747f.firebaseapp.com",
-  databaseURL: "https://catalogo-cf-3747f-default-rtdb.firebaseio.com",
-  projectId: "catalogo-cf-3747f",
-  storageBucket: "catalogo-cf-3747f.appspot.com",
-  messagingSenderId: "169757952923",
-  appId: "1:169757952923:web:cf9ef7cac635ae82f2ef3e"
+  apiKey: "AIzaSyBDLZZsNoyREt9BszD4_y1meDchWqqqhlA",
+  authDomain: "catalogo-cf-9e84d.firebaseapp.com",
+  databaseURL: "https://catalogo-cf-9e84d-default-rtdb.firebaseio.com",
+  projectId: "catalogo-cf-9e84d",
+  storageBucket: "catalogo-cf-9e84d.appspot.com",
+  messagingSenderId: "334563433617",
+  appId: "1:334563433617:web:b908ea6d4474a712913330"
 });
 
 
@@ -36,7 +36,7 @@ export function SelectedProduct() {
     async function fetchProduct(id: string) {
         const productDocRef = doc(db, "Products", id);
         const productDoc = await getDoc(productDocRef);
-        setProduct(productDoc.data() as Product);    
+        setProduct(productDoc.data() as Product);
       }
     fetchProduct(id!);
   },[id]);
