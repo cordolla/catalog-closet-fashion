@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { PlusCircle } from "phosphor-react";
 import { useEffect, useState } from "react";
 
 const firebaseApp = initializeApp({
@@ -18,6 +19,7 @@ export function ListProductsAdm(){
   const [name, setName] = useState("");
   const [size, setSize] = useState("");
   const [material, setMaterial] = useState("");
+  const [categoria, setCategoria] = useState("");
   const [color, setColor] = useState("");
   const [prince, setPrince] = useState("");
   const [products, setProducts] = useState<any[]>([]);
@@ -31,12 +33,24 @@ export function ListProductsAdm(){
       imageURL,
       color,
       material,
+      categoria,
       name,
       prince,
       size,
     });
     console.log(teste);
   }
+
+  const options = [
+    { value: 'croppeds', label: 'Croppeds' },
+    { value: 'conjuntos', label: 'Conjuntos' },
+    { value: 'saias', label: 'Saias' },
+    { value: 'shorts', label: 'Shorts' },
+    { value: 'vestidos', label: 'Vestidos' },
+    { value: 'body', label: 'Body' },
+    { value: 'calças', label: 'Calças' }
+
+  ]
 
 
   useEffect(() => {
@@ -72,15 +86,25 @@ export function ListProductsAdm(){
 
   return (
     <div>
-      <div className="bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-4">Lista de Produtos</h2>
-        <table className="w-full mb-6">
+      <div className="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-6 " >
+        <div className="flex justify-between w-[65%]">
+          <div>
+          </div>
+          <h2 className="text-2xl font-bold mb-4">Lista de Produtos</h2>
+          <PlusCircle 
+            size={32}
+            type="submit"
+            className="flex items-center justify-center cursor-pointer text-bold text-[20px] pt-1 pb h-10 w-10 rounded-md focus:outline-none focus:ring"
+            onClick={addProduct} />          
+        </div>
+        <table className="h-full w-[65%] mb-6">
           <thead>
             <tr>
               <th className="text-left py-2">Imagem</th>
               <th className="text-left py-2">Nome</th>
               <th className="text-left py-2">Tamanho</th>
               <th className="text-left py-2">Material</th>
+              <th className="text-left py-2">Categoria</th>
               <th className="text-left py-2">Cor</th>
               <th className="text-left py-2">Preço</th>
               <th className="text-left py-2">Ações</th>
@@ -95,6 +119,7 @@ export function ListProductsAdm(){
                 <td className="py-2">{product.name}</td>
                 <td className="py-2">{product.size}</td>
                 <td className="py-2">{product.material}</td>
+                <td className="py-2">{product.categoria}</td>
                 <td className="py-2">{product.color}</td>
                 <td className="py-2">R$ {product.prince}</td>
                 <td className="py-2">
@@ -104,6 +129,12 @@ export function ListProductsAdm(){
                   >
                     Apagar
                   </button>
+                  <button
+                    onClick={() => deleteProduct(product.id)}
+                    className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+                  >
+                    Editar
+                  </button>                             
                 </td>
               </tr>
             ))}
@@ -163,6 +194,22 @@ export function ListProductsAdm(){
           />
         </div>
         <div className="mb-4">
+          <label className="block text-gray-700">Categoria</label>
+          <select
+            name="material"
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded mt-2"
+            required
+          >
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
           <label className="block text-gray-700">Cor</label>
           <input
             type="text"
@@ -177,7 +224,7 @@ export function ListProductsAdm(){
         <div className="mb-4">
           <label className="block text-gray-700">Preço</label>
           <input
-            type="text"
+            type="number"
             name="prince"
             placeholder="number"
             value={prince}

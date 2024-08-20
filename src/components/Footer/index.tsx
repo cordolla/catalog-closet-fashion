@@ -4,7 +4,7 @@ import imageLogo from "../../assets/images/logocf.png"
 
 export function Footer() {
   return (
-    <div className="fixed bottom-0 flex justify-between left-0 w-full bg-black text-white p-4">  
+    <div className="bottom-0 flex justify-between left-0 w-full bg-black text-white p-4">  
       <div className="">
         <InstagramLogo size={50}/>
       </div>        
