@@ -1,5 +1,4 @@
 import { Cart } from "../Cart";
-import { Filters } from "../Filters";
 import imageLogo from "../../assets/images/logocf.png"
 import { InputBox } from "../InputBox";
 import { Link } from "react-router-dom";
@@ -22,7 +21,6 @@ export function Header() {
         <InputBox />
         <Cart />
       </div>
-      <Filters />
     </div>
   )
 }

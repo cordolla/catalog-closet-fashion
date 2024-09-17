@@ -14,13 +14,13 @@ interface Product {
 }
 
 const firebaseApp = initializeApp({
-  apiKey: "AIzaSyBDLZZsNoyREt9BszD4_y1meDchWqqqhlA",
-  authDomain: "catalogo-cf-9e84d.firebaseapp.com",
-  databaseURL: "https://catalogo-cf-9e84d-default-rtdb.firebaseio.com",
-  projectId: "catalogo-cf-9e84d",
-  storageBucket: "catalogo-cf-9e84d.appspot.com",
-  messagingSenderId: "334563433617",
-  appId: "1:334563433617:web:b908ea6d4474a712913330"
+  apiKey: "AIzaSyBDtSaJdRCN5uj7wqsYSgAE4jd2J7pJ04Q",
+  authDomain: "catalogo-cf-610c0.firebaseapp.com",
+  databaseURL: "https://catalogo-cf-610c0-default-rtdb.firebaseio.com",
+  projectId: "catalogo-cf-610c0",
+  storageBucket: "catalogo-cf-610c0.appspot.com",
+  messagingSenderId: "512467166",
+  appId: "1:512467166:web:8ff0a37285b3553996224f"
 });
 
 

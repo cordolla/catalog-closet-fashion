@@ -1,15 +1,19 @@
-export function Filters() {
+export function Filters({ setCategory }: { setCategory: (category: string) => void }) {
+  const categories = ["Todos", "croppeds", "conjuntos", "saias", "shorts", "vestidos", "body", "calças"];
+
   return (
     <div className="flex items-center justify-center bg-gray-200 m-0">
       <ul className="overflow-x-auto m-0 flex justify-between items-center gap-20 p-3 mx-10">
-        <li>Croppeds</li>
-        <li>Conjuntos</li>
-        <li>Saias</li>
-        <li>Shorts</li>
-        <li>Vestidos</li>
-        <li>Body</li>
-        <li>Calças</li>
+        {categories.map((category) => (
+          <li
+            key={category}
+            className="cursor-pointer"
+            onClick={() => setCategory(category)} 
+          >
+            {category}
+          </li>
+        ))}
       </ul>
     </div>
-  ) 
+  );
 }

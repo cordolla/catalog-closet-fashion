@@ -1,17 +1,18 @@
 import { initializeApp } from "firebase/app";
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, updateDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { PlusCircle } from "phosphor-react";
 import { useEffect, useState } from "react";
+import { AddProductModal } from "../AddProductModal";
 
 const firebaseApp = initializeApp({
-  apiKey: "AIzaSyBDLZZsNoyREt9BszD4_y1meDchWqqqhlA",
-  authDomain: "catalogo-cf-9e84d.firebaseapp.com",
-  databaseURL: "https://catalogo-cf-9e84d-default-rtdb.firebaseio.com",
-  projectId: "catalogo-cf-9e84d",
-  storageBucket: "catalogo-cf-9e84d.appspot.com",
-  messagingSenderId: "334563433617",
-  appId: "1:334563433617:web:b908ea6d4474a712913330"
+  apiKey: "AIzaSyBDtSaJdRCN5uj7wqsYSgAE4jd2J7pJ04Q",
+  authDomain: "catalogo-cf-610c0.firebaseapp.com",
+  databaseURL: "https://catalogo-cf-610c0-default-rtdb.firebaseio.com",
+  projectId: "catalogo-cf-610c0",
+  storageBucket: "catalogo-cf-610c0.appspot.com",
+  messagingSenderId: "512467166",
+  appId: "1:512467166:web:8ff0a37285b3553996224f"
 });
 
 export function ListProductsAdm(){
@@ -29,16 +30,31 @@ export function ListProductsAdm(){
   const productsCollectionRef = collection(db, "Products");
 
   async function addProduct() {
-    const teste = await addDoc(productsCollectionRef, {
-      imageURL,
-      color,
-      material,
-      categoria,
-      name,
-      prince,
-      size,
-    });
-    console.log(teste);
+    if (editingProduct) {
+      const productRef = doc(db, "Products", editingProduct.id);
+      await updateDoc(productRef, {
+        imageURL,
+        color,
+        material,
+        categoria,
+        name,
+        prince,
+        size,
+      });
+      console.log("Produto atualizado com sucesso");
+      setEditingProduct(null);
+    } else {
+      await addDoc(productsCollectionRef, {
+        imageURL,
+        color,
+        material,
+        categoria,
+        name,
+        prince,
+        size,
+      });
+      console.log("Produto adicionado com sucesso");
+    }
   }
 
   const options = [
@@ -52,6 +68,9 @@ export function ListProductsAdm(){
 
   ]
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [editingProduct, setEditingProduct] = useState<any | null>(null);
+
 
   useEffect(() => {
     const getProducts = async () => {
@@ -64,6 +83,19 @@ export function ListProductsAdm(){
   async function deleteProduct(id: any) {
       await deleteDoc(doc(db, 'Products', id));
       console.log("Item deletado com sucesso");
+  }
+
+  function handleEditProduct(product: any) {
+    setEditingProduct(product);
+    setImageURL(product.imageURL);
+    setName(product.name);
+    setSize(product.size);
+    setMaterial(product.material);
+    setCategoria(product.categoria);
+    setColor(product.color);
+    setPrince(product.prince);
+    setImageURL(product.imageURL);
+    setIsModalOpen(true);
   }
 
   async function handleImageChange(e: any) {
@@ -85,9 +117,9 @@ export function ListProductsAdm(){
   }
 
   return (
-    <div>
+    <div className="">
       <div className="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-6 " >
-        <div className="flex justify-between w-[65%]">
+        <div className="flex justify-between w-[40%]">
           <div>
           </div>
           <h2 className="text-2xl font-bold mb-4">Lista de Produtos</h2>
@@ -95,7 +127,9 @@ export function ListProductsAdm(){
             size={32}
             type="submit"
             className="flex items-center justify-center cursor-pointer text-bold text-[20px] pt-1 pb h-10 w-10 rounded-md focus:outline-none focus:ring"
-            onClick={addProduct} />          
+            /*onClick={addProduct}*/
+            onClick={() => setIsModalOpen(true)} />
+            
         </div>
         <table className="h-full w-[65%] mb-6">
           <thead>
@@ -106,35 +140,35 @@ export function ListProductsAdm(){
               <th className="text-left py-2">Material</th>
               <th className="text-left py-2">Categoria</th>
               <th className="text-left py-2">Cor</th>
-              <th className="text-left py-2">Preço</th>
-              <th className="text-left py-2">Ações</th>
+              <th className="py-2">Preço</th>
+              <th className="py-2">Ações</th>
             </tr>
           </thead>
           <tbody>
             {products.map((product, index) => (
               <tr key={index} className="border-t">
                 <td className="py-2">                  
-                  <img src={product.imageURL} alt={''} className="w-16 h-16 rounded-md" />                  
+                  <img src={product.imageURL} alt={''} className="w-16 h-20 rounded-md" />                  
                 </td>
                 <td className="py-2">{product.name}</td>
                 <td className="py-2">{product.size}</td>
                 <td className="py-2">{product.material}</td>
                 <td className="py-2">{product.categoria}</td>
                 <td className="py-2">{product.color}</td>
-                <td className="py-2">R$ {product.prince}</td>
-                <td className="py-2">
-                  <button
-                    onClick={() => deleteProduct(product.id)}
-                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
-                  >
-                    Apagar
-                  </button>
-                  <button
-                    onClick={() => deleteProduct(product.id)}
-                    className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
-                  >
-                    Editar
-                  </button>                             
+                <td className="text-center py-2">R$ {product.prince}</td>
+                <td className="text-center py-2">
+                    <button
+                      onClick={() => deleteProduct(product.id)}
+                      className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+                    >
+                      Apagar
+                    </button>
+                    <button
+                      onClick={() => handleEditProduct(product)}
+                      className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300"
+                    >
+                      Editar
+                    </button>                                                      
                 </td>
               </tr>
             ))}
@@ -143,8 +177,12 @@ export function ListProductsAdm(){
       </div>
 
       <div>
-      <form className="bg-white shadow-md rounded-lg p-6 mt-6">
-        <h2 className="text-2xl font-bold mb-4">Adicionar Produto</h2>
+      
+      <div className="">            
+        <AddProductModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <div>
+          <form className="bg-white shadow-md rounded-lg p-6 mt-6">
+        <h2 className="text-2xl font-bold mb-4">{editingProduct ? "Editar Produto" : "Adicionar Produto"}</h2>
         <div className="mb-4">
           <label className="block text-gray-700">Imagem</label>
           <input
@@ -236,13 +274,37 @@ export function ListProductsAdm(){
         <input
           className="hidden "
           required/>
-        <button
-          type="submit"
-          className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
-          onClick={addProduct}          
-        >Adicionar Produto
-        </button>
+        <div className="flex justify-between">
+          <button
+            type="submit"
+            className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+            onClick={addProduct}
+          >
+            {editingProduct ? "Salvar Alterações" : "Adicionar Produto"}
+          </button>
+          <button
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-blue-300"
+              onClick={() => {
+                setIsModalOpen(false);
+                setEditingProduct(null);
+                setImageURL("");
+                setName("");
+                setSize("");
+                setMaterial("");
+                setCategoria("");
+                setColor("");
+                setPrince("");
+                setImageURL("");
+              }}
+            >
+              Cancelar
+            </button>
+          </div> 
       </form>
+          </div>
+          
+        </AddProductModal>
+        </div>
       </div>
     </div>
   )

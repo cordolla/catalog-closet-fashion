@@ -35,7 +35,7 @@ export function CartPage(){
                       return (
                         <tr className="border-t" key={index}>
                           <td className="py-2 flex items-center">
-                          <img src={product.imageURL} alt='' className="w-16 h-16 rounded-md mr-2" />
+                          <img src={product.imageURL} alt='' className="w-20 h-24 rounded-md mr-2" />
                             {product.name}
                           </td>
                           <td className="py-2">1</td>
