@@ -16,8 +16,8 @@ const firebaseApp = initializeApp({
 
 export function ListProducts() {
   const [products, setProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]); // Estado para os produtos filtrados
-  const [selectedCategory, setSelectedCategory] = useState<string>("Todos"); // Estado da categoria selecionada
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("Todos"); 
   
 
   const db = getFirestore(firebaseApp);
@@ -28,14 +28,14 @@ export function ListProducts() {
       const data = await getDocs(productsCollectionRef);
       const productsList = data.docs.map((product) => ({ ...product.data(), id: product.id }));
       setProducts(productsList);
-      setFilteredProducts(productsList); // Inicialmente todos os produtos são exibidos
+      setFilteredProducts(productsList); 
     };
     getProducts();
   }, []);
 
   useEffect(() => {
     if (selectedCategory === "Todos") {
-      setFilteredProducts(products); // Mostra todos os produtos se "Todos" for selecionado
+      setFilteredProducts(products); 
     } else {
       const filtered = products.filter((product) => product.categoria === selectedCategory);
       setFilteredProducts(filtered);
@@ -44,7 +44,7 @@ export function ListProducts() {
 
   return(
     <div>
-      <Filters setCategory={setSelectedCategory} /> {/* Passa a função para atualizar a categoria */}
+      <Filters setCategory={setSelectedCategory} />
       
       <div  className="flex items-center justify-center">
         <div className="flex min-h-screen grid lg:grid-cols-4 gap-[40px] mx-12 my-12">
