@@ -49,25 +49,30 @@ export function SelectedProduct() {
   }
 
   return (
-  <div className="min-h-screen bg-white flex items-center justify-center">
-          <div className="bg-white shadow rounded-lg p-6 w-full max-w-4xl mx-auto flex">
-            <img 
-              src={product?.imageURL}
-              alt=''
-              className="w-1/2 h-auto rounded-md transition duration-300 ease-in-out transform hover:scale-105 hover:grayscale"
-            />
-            <div className="w-1/2 pl-6">
-              <h2 className="text-3xl font-semibold mb-4">{product?.name}</h2>
-              <p className="text-gray-600 text-2xl mb-2">R$ {product?.prince}</p>
-              <p className="text-gray-600 text-lg mb-2">Tamanho: {product?.size}</p>
-              <p className="text-gray-600 text-lg mb-4">Material: {product?.material}</p>
-                <button
-                onClick={handleAddToCart}
-                className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300">
-                  Adicionar ao Carrinho
-                </button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-white flex items-start justify-center py-4">
+      <div className="bg-white shadow rounded-lg p-6 w-full max-w-4xl flex">
+        <div className="relative w-1/2">
+          <img
+            src={product?.imageURL}
+            alt={product?.name || 'Produto'}
+            className="w-full h-auto rounded-none border-none transform transition-transform duration-300 ease-in-out hover:scale-110"
+          />
         </div>
-  )
+        <div className="w-1/2 pl-6 flex flex-col justify-between">
+          <div>
+            <h2 className="text-3xl font-semibold mb-2">{product?.name}</h2>
+            <p className="text-gray-600 text-2xl mb-4">R$ {product?.prince}</p>
+            <p className="text-gray-600 text-lg mb-2">Tamanho: {product?.size}</p>
+            <p className="text-gray-600 text-lg">Material: {product?.material}</p>
+          </div>
+          <button
+            onClick={handleAddToCart}
+            className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 mt-4"
+          >
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
