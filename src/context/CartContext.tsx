@@ -22,66 +22,38 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [cart, setCart] = useState<Product[]>([]);
 
   useEffect(() => {
-    localStorage.removeItem("cart");
-    sessionStorage.removeItem("cart");
-    const loadCart = () => {
-      const savedCartLocal = localStorage.getItem("cart");
-      const savedCartSession = sessionStorage.getItem("cart");
-      const savedCart = savedCartSession || savedCartLocal;
-
-      if (savedCart) {
-        try {
-          const parsedCart = JSON.parse(savedCart) as Product[];
-          setCart(parsedCart);
-        } catch (error) {
-          console.error("Erro ao carregar o carrinho do armazenamento:", error);
-        }
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        setCart(parsedCart);
+      } catch (error) {
+        console.error("Erro ao carregar o carrinho do localStorage:", error);
       }
-    };
-
-    loadCart();
+    }
   }, []);
 
   useEffect(() => {
-    const saveCart = () => {
+    if (cart.length > 0) { 
       try {
-        const cartString = JSON.stringify(cart);
-        localStorage.setItem("cart", cartString);
-        sessionStorage.setItem("cart", cartString);
+        console.log("Salvando carrinho no localStorage:", cart);
+        localStorage.setItem("cart", JSON.stringify(cart));
       } catch (error) {
-        console.error("Erro ao salvar o carrinho no armazenamento:", error);
+        console.error("Erro ao salvar o carrinho no localStorage:", error);
       }
-    };
-
-    saveCart();
+    }
   }, [cart]);
 
   const addToCart = (product: Product) => {
-    setCart((prevCart) => {
-      const updatedCart = [...prevCart, product];
-      return updatedCart;
-    });
+    setCart((prevCart) => [...prevCart, product]);
   };
 
-const removeFromCart = (name: string) => {
-  console.log("Nome para remover:", name);
-
-  setCart((prevCart) => {
-    console.log("Carrinho antes da remoção:", prevCart);
-
-    const updatedCart = prevCart.filter(product => {
-      const shouldRemove = product.name === name;
-      console.log(`Produto ${product.name} - Deve remover? ${shouldRemove}`);
-      return !shouldRemove;
-    });
-
-    console.log("Carrinho atualizado após remoção:", updatedCart);
-    return updatedCart;
-  });
-};
+  const removeFromCart = (name: string) => {
+    setCart((prevCart) => prevCart.filter((product) => product.name !== name));
+  };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, setCart, removeFromCart  }}>
+    <CartContext.Provider value={{ cart, addToCart, setCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
