@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
 
+interface ProductType {
+  id: string;
+  imageURL: string;
+  prince: number;
+  name: string;
+  size: string;
+}
 
-export function Product(props:  any) {
-  const {product} = props;
+interface ProductProps {
+  product: ProductType;
+}
 
+export function Product({ product }: ProductProps) {
   return(
     <Link to={`/Item-page/${product.id}`} >
       <div className="bg-white cursor-pointer w-[421px] m-0 gap-0 p-0">

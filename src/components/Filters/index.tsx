@@ -1,5 +1,5 @@
 export function Filters({ setCategory }: { setCategory: (category: string) => void }) {
-  const categories = ["Todos", "croppeds", "conjuntos", "saias", "shorts", "vestidos", "body", "calças"];
+  const categories = ["Todos", "Croppeds", "Conjuntos", "Saias", "Shorts", "Vestidos", "Body", "Calças"];
 
   return (
     <div className="flex items-center justify-center bg-gray-200 m-0">

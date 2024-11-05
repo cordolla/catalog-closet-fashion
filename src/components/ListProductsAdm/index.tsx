@@ -58,13 +58,13 @@ export function ListProductsAdm(){
   }
 
   const options = [
-    { value: 'croppeds', label: 'Croppeds' },
-    { value: 'conjuntos', label: 'Conjuntos' },
-    { value: 'saias', label: 'Saias' },
-    { value: 'shorts', label: 'Shorts' },
-    { value: 'vestidos', label: 'Vestidos' },
-    { value: 'body', label: 'Body' },
-    { value: 'calças', label: 'Calças' }
+    { value: 'Croppeds', label: 'Croppeds' },
+    { value: 'Conjuntos', label: 'Conjuntos' },
+    { value: 'Saias', label: 'Saias' },
+    { value: 'Shorts', label: 'Shorts' },
+    { value: 'Vestidos', label: 'Vestidos' },
+    { value: 'Body', label: 'Body' },
+    { value: 'Calças', label: 'Calças' }
 
   ]
 

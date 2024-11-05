@@ -3,11 +3,7 @@ import imageLogo from "../../assets/images/logocf.png"
 import { InputBox } from "../InputBox";
 import { Link } from "react-router-dom";
 
-
-
-export function Header() {
-
-  
+export function Header() {  
   return (
 
     <div className="flex flex-col">

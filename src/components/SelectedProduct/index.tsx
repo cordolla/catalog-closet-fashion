@@ -40,6 +40,7 @@ export function SelectedProduct() {
       }
     fetchProduct(id!);
   },[id]);
+  
 
   const handleAddToCart = () => {
     if (product) {
@@ -49,28 +50,30 @@ export function SelectedProduct() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-start justify-center py-4">
-      <div className="bg-white shadow rounded-lg p-6 w-full max-w-4xl flex">
-        <div className="relative w-1/2">
-          <img
-            src={product?.imageURL}
-            alt={product?.name || 'Produto'}
-            className="w-full h-auto rounded-none border-none transform transition-transform duration-300 ease-in-out hover:scale-110"
-          />
-        </div>
-        <div className="w-1/2 pl-6 flex flex-col justify-between">
-          <div>
-            <h2 className="text-3xl font-semibold mb-2">{product?.name}</h2>
-            <p className="text-gray-600 text-2xl mb-4">R$ {product?.prince}</p>
-            <p className="text-gray-600 text-lg mb-2">Tamanho: {product?.size}</p>
-            <p className="text-gray-600 text-lg">Material: {product?.material}</p>
+    <div>
+      <div className="min-h-screen bg-white flex items-start justify-center py-4">
+        <div className="bg-white shadow rounded-lg p-6 w-full max-w-4xl flex flex-col md:flex-row">
+          <div className="relative w-full md:w-1/2">
+            <img
+              src={product?.imageURL}
+              alt={product?.name || 'Produto'}
+              className="w-full h-auto rounded-none border-none transform transition-transform duration-300 ease-in-out hover:scale-110"
+            />
           </div>
-          <button
-            onClick={handleAddToCart}
-            className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 mt-4"
-          >
-            Adicionar ao Carrinho
-          </button>
+          <div className="w-full md:w-1/2 pl-0 md:pl-6 flex flex-col justify-between">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-semibold mb-2">{product?.name}</h2>
+              <p className="text-gray-600 text-xl md:text-2xl mb-4">R$ {product?.prince}</p>
+              <p className="text-gray-600 text-base md:text-lg mb-2">Tamanho: {product?.size}</p>
+              <p className="text-gray-600 text-base md:text-lg">Material: {product?.material}</p>
+            </div>
+            <button
+              onClick={handleAddToCart}
+              className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 mt-4"
+            >
+              Adicionar ao Carrinho
+            </button>
+          </div>
         </div>
       </div>
     </div>

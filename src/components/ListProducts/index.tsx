@@ -46,8 +46,8 @@ export function ListProducts() {
     <div>
       <Filters setCategory={setSelectedCategory} />
       
-      <div  className="flex items-center justify-center">
-        <div className="flex min-h-screen grid lg:grid-cols-4 gap-[40px] mx-12 my-12">
+      <div  className="grid items-center justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 gap-6 mx-12 my-12">
           {filteredProducts.map((item, index) => (
             <Product key={index} product={item} />
           ))}
